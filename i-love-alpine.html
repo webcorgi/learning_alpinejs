@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script
+            defer="defer"
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    </head>
+    <body>
+        <!-- 시작
+            x-data
+            x-text
+        -->
+        <h1 x-data="{ message: 'Alpine' }" x-text="message"></h1>
+
+        <!-- 카운터구축
+            @click
+        -->
+        <div x-data="{ count: 0 }">
+            <!-- 데이터 선언 -->
+            <!-- <button x-on:click="count++">증가</button> -->
+            <!-- 이벤트수신 -->
+            <button @click="count++">증가</button>
+            <!-- 출력 -->
+            <span x-text="count"></span>
+        </div>
+
+        <!-- 드롭다운 구축
+            x-shdow
+            @click.outside
+        -->
+        <div x-data="{open:false}">
+            <button @click="open= !open">드롭다운</button>
+            <!-- 요소 토글 / 외부 클릭 -->
+            <div x-show="open" @click.outside="open=false">asdsd</div>
+        </div>
+
+        <!-- 검색 입력 구축
+            x-data (다중값입력 / get 함수)
+            x-model === x-data의 내부값 바인딩.
+            x-for ( [item] in [items] ) / :key
+            template (html에서 페이지에 즉시 그려지지 않고 js를 위한 요소)
+        -->
+        <div x-data="{
+            search:'',
+            items:['paris', 'seoul', 'newyork'],
+            get filteredItems(){
+                return this.items.filter(
+                    i => i.startsWith(this.search)
+                )
+            }
+        }">
+            <input x-model="search" placeholder="Search...">
+            <ul>
+                <template x-for="item in filteredItems" :key="item">
+                    <li x-text="item"></li>
+                </template>
+            </ul>
+        </div>
+    </body>
+</html>
